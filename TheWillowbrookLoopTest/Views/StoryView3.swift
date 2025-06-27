@@ -125,7 +125,7 @@ struct StoryView3: View
                 case .choice3:
                     StoryViewStripped(choiceMade: .constant(nav.destinationValue))
                 case .choice4:
-                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
+                    StoryView18(choiceMade: .constant(nav.destinationValue))
                 }
             }
         }

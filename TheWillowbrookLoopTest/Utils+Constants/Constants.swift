@@ -15,6 +15,9 @@ struct Constants
     static let RainAndThunder = NSDataAsset(name: "RainAndThunder")
     static let ThunderCrash = NSDataAsset(name: "ThunderCrash")
     static let MainViewMuic = NSDataAsset(name: "MainViewMusic")
+    
+    // Images
+    static let ScaryTrees = NSDataAsset(name: "ScaryTrees")
 }
 
 // I don't understand how this works at all. I could use a refresher and possibily a more concise version of this.

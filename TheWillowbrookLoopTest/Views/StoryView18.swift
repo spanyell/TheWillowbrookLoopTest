@@ -19,6 +19,7 @@ struct StoryView18: View
     @State private var navigateTo: StoryNavigation? = nil
     @State private var fadeIn = false
     @State private var blurAmount: CGFloat = 20
+    @State private var fadeOpacity: Double = 0
 
     var body: some View
     {
@@ -28,7 +29,7 @@ struct StoryView18: View
         {
             ZStack
             {
-                LightningView()
+                WindowsRainView()
                 VStack
                 {
                     // Story Text
@@ -103,9 +104,16 @@ struct StoryView18: View
                         }
                     }
                 }
+                .opacity(fadeOpacity)
+                .animation(.easeInOut(duration: 3), value: fadeOpacity)
                 .onAppear
                 {
                     // ADD STUFF HERE
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                        withAnimation(.easeInOut(duration: 3)) {
+                            fadeOpacity = 1
+                        }
+                    }
                 }
                 .preferredColorScheme(.dark)
                 .navigationBarBackButtonHidden(true)
@@ -134,5 +142,6 @@ struct StoryView18: View
 
 #Preview
 {
-    StoryViewStripped(choiceMade: .constant(18))
+    StoryView18(choiceMade: .constant(18))
 }
+

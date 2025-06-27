@@ -142,6 +142,20 @@ struct StoryView1: View
                 .ignoresSafeArea()
                 .navigationTransition(.zoom(sourceID: "zoom", in: namespace))
             }
+//            .overlay(alignment: .topTrailing) {
+//                Button(action: {
+//                    choiceMade = 0
+//                    navigateTo = .choice1(0)
+//                }) {
+//                    Text("Start Over")
+//                        .font(.caption)
+//                        .foregroundColor(.white)
+//                        .padding(8)
+//                        .background(Color.black.opacity(0.7))
+//                        .clipShape(RoundedRectangle(cornerRadius: 8))
+//                }
+//                .padding()
+//            }
             // This is where the view changes
             .navigationDestination(item: $navigateTo)
             { nav in
