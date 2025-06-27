@@ -7,15 +7,16 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+struct ContentView: View
+{
+    var body: some View
+    {
+        ZStack
+        {
+//            StartView()
+           StoryView0(choiceMade: .constant(0))
         }
-        .padding()
+        .preferredColorScheme(.dark)
     }
 }
 
