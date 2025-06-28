@@ -32,6 +32,20 @@ struct StoryView3: View
                 VStack
                 {
                     // Story Text
+                    Button(action: {
+                        navigateTo = .restartGame(0)
+                    })
+                    {
+                        Text("Restart Game")
+                            .font(.caption)
+                            .foregroundColor(.white)
+                            .padding(8)
+                            .background(Color.black.opacity(0.7))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                    .padding()
+                    
+                    Text("\(currentPage.id)")
                     Text("\(currentPage.storyText)")
                         .font(Font.custom("Hoefler Text", size: 20))
                         .foregroundStyle(.white)
@@ -119,13 +133,15 @@ struct StoryView3: View
                 switch nav
                 {
                 case .choice1:
-                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
+                    StoryView4(choiceMade: .constant(nav.destinationValue))
                 case .choice2:
                     StoryViewStripped(choiceMade: .constant(nav.destinationValue))
                 case .choice3:
                     StoryViewStripped(choiceMade: .constant(nav.destinationValue))
                 case .choice4:
                     StoryView18(choiceMade: .constant(nav.destinationValue))
+                case .restartGame:
+                    StoryView0(choiceMade: .constant(0))
                 }
             }
         }
@@ -134,5 +150,5 @@ struct StoryView3: View
 
 #Preview
 {
-    StoryViewStripped(choiceMade: .constant(3))
+    StoryView3(choiceMade: .constant(3))
 }

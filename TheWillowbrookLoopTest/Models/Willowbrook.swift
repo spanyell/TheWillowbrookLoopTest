@@ -19,4 +19,5 @@ struct Willowbrook: Decodable
     let choice3Destination: Int?
     let choice4: String?
     let choice4Destination: Int?
+    let restartGame: Int?
 }

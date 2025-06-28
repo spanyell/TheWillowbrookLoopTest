@@ -1,14 +1,13 @@
 //
-//  StoryView18.swift
-//  WillowbrookLoopTest
+//  StoryView7.swift
+//  TheWillowbrookLoopTest
 //
-//  Created by Dan Beers on 6/24/25.
+//  Created by Dan Beers on 6/27/25.
 //
 
 import SwiftUI
 
-struct StoryView18: View
-{
+struct StoryView7: View {
     @Binding var choiceMade: Int
 
     @Namespace private var namespace
@@ -19,7 +18,6 @@ struct StoryView18: View
     @State private var navigateTo: StoryNavigation? = nil
     @State private var fadeIn = false
     @State private var blurAmount: CGFloat = 20
-    @State private var fadeOpacity: Double = 0
 
     var body: some View
     {
@@ -29,9 +27,10 @@ struct StoryView18: View
         {
             ZStack
             {
-                WindowsRainView()
+                LightningView()
                 VStack
                 {
+                    // Story Text
                     Button(action: {
                         navigateTo = .restartGame(0)
                     })
@@ -44,8 +43,6 @@ struct StoryView18: View
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
                     .padding()
-
-                    // Story Text
                     
                     Text("\(currentPage.id)")
                     Text("\(currentPage.storyText)")
@@ -119,38 +116,29 @@ struct StoryView18: View
                         }
                     }
                 }
-                .opacity(fadeOpacity)
-                .animation(.easeInOut(duration: 3), value: fadeOpacity)
                 .onAppear
                 {
                     // ADD STUFF HERE
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 4)
-                    {
-                        withAnimation(.easeInOut(duration: 3))
-                        {
-                            fadeOpacity = 1
-                        }
-                    }
                 }
                 .preferredColorScheme(.dark)
                 .navigationBarBackButtonHidden(true)
                 .ignoresSafeArea()
                 .navigationTransition(.zoom(sourceID: "zoom", in: namespace))
             }
-
+            
             // This is where the view changes
             .navigationDestination(item: $navigateTo)
             { nav in
                 switch nav
                 {
                 case .choice1:
-                    StoryView4(choiceMade: .constant(nav.destinationValue))
+                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
                 case .choice2:
                     StoryViewStripped(choiceMade: .constant(nav.destinationValue))
                 case .choice3:
                     StoryViewStripped(choiceMade: .constant(nav.destinationValue))
                 case .choice4:
-                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
+                    StoryView18(choiceMade: .constant(nav.destinationValue))
                 case .restartGame:
                     StoryView0(choiceMade: .constant(0))
                 }
@@ -159,7 +147,6 @@ struct StoryView18: View
     }
 }
 
-#Preview
-{
-    StoryView18(choiceMade: .constant(18))
+#Preview {
+    StoryView7(choiceMade: .constant(7))
 }

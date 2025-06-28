@@ -28,6 +28,21 @@ struct StoryViewStripped: View {
             {
                 VStack
                 {
+                    // Temporary Restart Game button
+                    Button(action: {
+                        navigateTo = .restartGame(0)
+                    })
+                    {
+                        Text("Restart Game")
+                            .font(.caption)
+                            .foregroundColor(.white)
+                            .padding(8)
+                            .background(Color.black.opacity(0.7))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                    .padding()
+                    Text("StoryViewStripped")
+                    
                     // Story Text
                     Text("\(currentPage.storyText)")
                         .font(Font.custom("Hoefler Text", size: 20))
@@ -96,6 +111,7 @@ struct StoryViewStripped: View {
                 .navigationBarBackButtonHidden(true)
                 .ignoresSafeArea()
             }
+            
             // This is where the view changes
             .navigationDestination(item: $navigateTo) { nav in
                 switch nav {
@@ -107,6 +123,8 @@ struct StoryViewStripped: View {
                     StoryViewStripped(choiceMade: .constant(nav.destinationValue))
                 case .choice4:
                     StoryViewStripped(choiceMade: .constant(nav.destinationValue))
+                case .restartGame:
+                    StoryView0(choiceMade: .constant(0))
                 }
             }
         }

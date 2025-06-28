@@ -1,7 +1,7 @@
 [
  {
    "id": 0,
-   "storyText": "With a gasp of air, your eyes snap open. You awaken from a nightmare of epic proportions, your skin clammy, your clothes soaked in sweat. You shiver, listening as the dull roar of heavy rain somehow putting a hush to the room. You lay in a four poster canopy bed, its curtains drawn. It is dark, save for the intermittent flashes of lightning. You shiver again, not sure if from the cold or the nightmare. The last thing you remember…",
+   "storyText": "With a gasp of air, your eyes snap open. You awaken from a terrible nightmare, your skin clammy, your clothes soaked in sweat. You shiver, listening as the dull roar of heavy rain somehow putting a hush to the room. You lie on a four poster canopy bed, its curtains drawn. It is dark, save for the intermittent flashes of lightning. You shiver again, not sure if from the cold or the nightmare. The last thing you remember…",
    "choice1": "Rise and open the curtains.",
    "choice1Destination": 3,
    "choice2": "Try to remember your dream.",
@@ -13,8 +13,7 @@
  },
  {
    "id": 1,
-   "storyText": "The events of the dream are vague, as all dreams are, but you recall the need to move, and with great speed. The desire to run, to get as far away from where you had been, was one of desperation and fear. Were you chasing someone? Was someone or something chasing you? Of this, you cannot be certain. You do know that after a long chase, you feel that you were getting nowhere, dreaming in an endless circle. And so after a feeling of extreme exhaustion and the acceptance that you had been beaten, you decided to give up the struggle, and relent. The fear that arose in the moments before you awoke were beyond any kind of dream you’ve ever had before.",
-   "choice1": "Rise and open the curtains.",
+   "storyText": "The events of the dream are vague, as all dreams are, but you recall the need to move, and with great speed. The desire to run, to get as far away from where you had been, was one of desperation and fear. Were you chasing someone? Was someone or something chasing you? The fear that arose in the moments before you awoke were beyond any kind of dream you’ve ever had before.",
    "choice1Destination": 3,
    "choice2": "Try to remember who you are.",
    "choice2Destination": 2,
@@ -25,7 +24,7 @@
  },
  {
    "id": 2,
-   "storyText": "While at first, you find it rather silly to question your own memory, it remains elusive. The last moment you remember with any great clarity is a train ride, an uncomfortable seat, and a key. You were happy, hopeful, the best you felt in years. After that, it gets foggy. You recall the squeak of an iron wrought gate, and a long driveway leading to a loop surrounding a stone fountain. You see a great shadow against a dark sky, a white front door. And after that, nothing. You fight off a sense of panic as your mind whirls. The memories feel like so long ago, yet there is nothing in your mind until right now. You try to remember, again and again, but it seems the harder you try, the less you understand. How much time occurred from now and then? And where exactly are you? You are resigned to the fact that as of this moment, you simply have no answers.",
+   "storyText": "While at first, you find it rather silly to question your own memory, it remains elusive. You fight off a sense of panic as your mind whirls. What memories you have feel like so long ago. You try to remember, again and again, but it seems the harder you try, the less you understand. You are resigned to the fact that as of this moment, you simply have no answers.",
    "choice1": "Rise and open the curtains.",
    "choice1Destination": 3,
    "choice2": "Try to remember your dream.",
@@ -195,7 +194,7 @@
    "id": 16,
    "storyText": "You reach for the knob and try to turn it. It is locked.",
    "choice1": "Look for a light switch.",
-   "choice1Destination": 16,
+   "choice1Destination": 17,
    "choice2": "Try the smaller door.",
    "choice2Destination": 4,
    "choice3": "Look out the window.",

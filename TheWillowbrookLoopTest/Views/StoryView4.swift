@@ -1,13 +1,13 @@
 //
-//  StoryView18.swift
-//  WillowbrookLoopTest
+//  StoryView4.swift
+//  TheWillowbrookLoopTest
 //
-//  Created by Dan Beers on 6/24/25.
+//  Created by Dan Beers on 6/27/25.
 //
 
 import SwiftUI
 
-struct StoryView18: View
+struct StoryView4: View
 {
     @Binding var choiceMade: Int
 
@@ -19,7 +19,6 @@ struct StoryView18: View
     @State private var navigateTo: StoryNavigation? = nil
     @State private var fadeIn = false
     @State private var blurAmount: CGFloat = 20
-    @State private var fadeOpacity: Double = 0
 
     var body: some View
     {
@@ -29,9 +28,11 @@ struct StoryView18: View
         {
             ZStack
             {
-                WindowsRainView()
+                LightningView()
+                DoorGroansOpenView()
                 VStack
                 {
+                    // Story Text
                     Button(action: {
                         navigateTo = .restartGame(0)
                     })
@@ -45,8 +46,6 @@ struct StoryView18: View
                     }
                     .padding()
 
-                    // Story Text
-                    
                     Text("\(currentPage.id)")
                     Text("\(currentPage.storyText)")
                         .font(Font.custom("Hoefler Text", size: 20))
@@ -54,9 +53,12 @@ struct StoryView18: View
                         .multilineTextAlignment(.leading)
                         .frame(width: 400)
                         .padding()
+                        .opacity(fadeIn ? 1 : 0)
+                        
 
                     // Ellipse glow
                     GlowingEllipseView()
+                        .opacity(fadeIn ? 1 : 0)
 
                     // Choices
                     Button
@@ -70,6 +72,7 @@ struct StoryView18: View
                             .font(Font.custom("Hoefler Text", size: 20))
                             .foregroundColor(.white)
                             .padding()
+                            .opacity(fadeIn ? 1 : 0)
                     }
 
                     // Optional choices
@@ -86,6 +89,7 @@ struct StoryView18: View
                                 .font(Font.custom("Hoefler Text", size: 20))
                                 .foregroundColor(.white)
                                 .padding()
+                                .opacity(fadeIn ? 1 : 0)
                         }
                     }
                     if currentPage.choice3Destination != nil
@@ -101,6 +105,7 @@ struct StoryView18: View
                                 .font(Font.custom("Hoefler Text", size: 20))
                                 .foregroundColor(.white)
                                 .padding()
+                                .opacity(fadeIn ? 1 : 0)
                         }
                     }
                     if currentPage.choice4Destination != nil
@@ -116,19 +121,17 @@ struct StoryView18: View
                                 .font(Font.custom("Hoefler Text", size: 20))
                                 .foregroundColor(.white)
                                 .padding()
+                                .opacity(fadeIn ? 1 : 0)
                         }
                     }
                 }
-                .opacity(fadeOpacity)
-                .animation(.easeInOut(duration: 3), value: fadeOpacity)
                 .onAppear
                 {
-                    // ADD STUFF HERE
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 4)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 7)
                     {
-                        withAnimation(.easeInOut(duration: 3))
+                        withAnimation(.easeInOut(duration: 2))
                         {
-                            fadeOpacity = 1
+                            fadeIn.toggle()
                         }
                     }
                 }
@@ -144,13 +147,13 @@ struct StoryView18: View
                 switch nav
                 {
                 case .choice1:
-                    StoryView4(choiceMade: .constant(nav.destinationValue))
+                    StoryView5(choiceMade: .constant(nav.destinationValue))
                 case .choice2:
-                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
+                    StoryView6(choiceMade: .constant(nav.destinationValue))
                 case .choice3:
-                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
+                    StoryView7(choiceMade: .constant(nav.destinationValue))
                 case .choice4:
-                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
+                    StoryView18(choiceMade: .constant(nav.destinationValue))
                 case .restartGame:
                     StoryView0(choiceMade: .constant(0))
                 }
@@ -161,5 +164,5 @@ struct StoryView18: View
 
 #Preview
 {
-    StoryView18(choiceMade: .constant(18))
+    StoryView4(choiceMade: .constant(4))
 }

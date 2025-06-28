@@ -206,6 +206,8 @@ struct StoryView: View
                     StoryViewStripped(choiceMade: .constant(nav.destinationValue))
                 case .choice4:
                     StoryViewStripped(choiceMade: .constant(nav.destinationValue))
+                case .restartGame:
+                    StoryView0(choiceMade: .constant(0))
                 }
             }
         }

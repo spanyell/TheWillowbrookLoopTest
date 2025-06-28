@@ -23,6 +23,7 @@ struct StoryView2: View
     @State private var offsetChoices = false
     @State private var fadeIn = false
     @State private var blurAmount: CGFloat = 20
+    @State private var storyTextRotation: Double = 0
 
     var body: some View
     {
@@ -36,6 +37,20 @@ struct StoryView2: View
                 VStack
                 {
                     // Story Text
+                    Button(action: {
+                        navigateTo = .restartGame(0)
+                    })
+                    {
+                        Text("Restart Game")
+                            .font(.caption)
+                            .foregroundColor(.white)
+                            .padding(8)
+                            .background(Color.black.opacity(0.7))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                    .padding()
+                    
+                    Text("\(currentPage.id)")
                     Text("\(currentPage.storyText)")
                         .font(Font.custom("Hoefler Text", size: 20))
                         .foregroundStyle(.white)
@@ -81,9 +96,15 @@ struct StoryView2: View
                     {
                         Button
                         {
+                            withAnimation(.easeInOut(duration: 2))
+                            {
+                                fadeIn = false
+                                blurAmount = 100
+                                storyTextRotation = -360
+                            }
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2)
                             {
-                                navigateTo = .choice3(currentPage.choice3Destination ?? 0)
+                                navigateTo = .choice2(currentPage.choice2Destination ?? 0)
                             }
                         } label: {
                             Text("\(currentPage.choice3 ?? "")")
@@ -132,6 +153,8 @@ struct StoryView2: View
                     StoryViewStripped(choiceMade: .constant(nav.destinationValue))
                 case .choice4:
                     StoryViewStripped(choiceMade: .constant(nav.destinationValue))
+                case .restartGame:
+                    StoryView0(choiceMade: .constant(0))
                 }
             }
         }

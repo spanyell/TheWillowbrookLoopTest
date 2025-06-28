@@ -38,6 +38,20 @@ struct StoryView1: View
                 VStack
                 {
                     // Story Text
+                    Button(action: {
+                        navigateTo = .restartGame(0)
+                    })
+                    {
+                        Text("Restart Game")
+                            .font(.caption)
+                            .foregroundColor(.white)
+                            .padding(8)
+                            .background(Color.black.opacity(0.7))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                    .padding()
+                    
+                    Text("\(currentPage.id)")
                     Text("\(currentPage.storyText)")
                         .font(Font.custom("Hoefler Text", size: 20))
                         .foregroundStyle(.white)
@@ -48,7 +62,7 @@ struct StoryView1: View
                         .rotationEffect(.degrees(storyTextRotation))
                         .opacity(fadeIn ? 1 : 0)
                         .blur(radius: blurAmount)
-                    
+
                     // Ellipse glow
                     GlowingEllipseView()
                         .offset(x: offsetEllipse ? -1000 : 0)
@@ -68,7 +82,7 @@ struct StoryView1: View
                             .blur(radius: blurAmount)
                     }
 
-                    // Optional choices
+                    // Optional choice 2
                     if currentPage.choice2Destination != nil
                     {
                         Button
@@ -93,6 +107,8 @@ struct StoryView1: View
                                 .blur(radius: blurAmount)
                         }
                     }
+                    
+                    // Optional choice 3
                     if currentPage.choice3Destination != nil
                     {
                         Button
@@ -111,6 +127,8 @@ struct StoryView1: View
                                 .blur(radius: blurAmount)
                         }
                     }
+                    
+                    // Optional choice 4
                     if currentPage.choice4Destination != nil
                     {
                         Button
@@ -142,20 +160,8 @@ struct StoryView1: View
                 .ignoresSafeArea()
                 .navigationTransition(.zoom(sourceID: "zoom", in: namespace))
             }
-//            .overlay(alignment: .topTrailing) {
-//                Button(action: {
-//                    choiceMade = 0
-//                    navigateTo = .choice1(0)
-//                }) {
-//                    Text("Start Over")
-//                        .font(.caption)
-//                        .foregroundColor(.white)
-//                        .padding(8)
-//                        .background(Color.black.opacity(0.7))
-//                        .clipShape(RoundedRectangle(cornerRadius: 8))
-//                }
-//                .padding()
-//            }
+
+            
             // This is where the view changes
             .navigationDestination(item: $navigateTo)
             { nav in
@@ -169,6 +175,8 @@ struct StoryView1: View
                     StoryViewStripped(choiceMade: .constant(nav.destinationValue))
                 case .choice4:
                     StoryViewStripped(choiceMade: .constant(nav.destinationValue))
+                case .restartGame:
+                    StoryView0(choiceMade: .constant(0))
                 }
             }
         }

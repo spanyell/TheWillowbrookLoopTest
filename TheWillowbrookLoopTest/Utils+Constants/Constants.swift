@@ -18,6 +18,8 @@ struct Constants
     
     // Images
     static let ScaryTrees = NSDataAsset(name: "ScaryTrees")
+    static let GrandPiano = NSDataAsset(name: "GrandPiano")
+    static let Bathroom = NSDataAsset(name: "Bathroom")
 }
 
 // I don't understand how this works at all. I could use a refresher and possibily a more concise version of this.
