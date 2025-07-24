@@ -1,13 +1,14 @@
 //
-//  StoryView5.swift
-//  TheWillowbrookLoopTest
+//  StoryView3.swift
+//  WillowbrookLoopTest
 //
-//  Created by Dan Beers on 6/27/25.
+//  Created by Dan Beers on 6/23/25.
 //
 
 import SwiftUI
 
-struct StoryView5: View {
+struct StoryView3: View
+{
     @Binding var choiceMade: Int
 
     @Namespace private var namespace
@@ -31,19 +32,6 @@ struct StoryView5: View {
                 VStack
                 {
                     // Story Text
-                    Button(action: {
-                        navigateTo = .restartGame(0)
-                    })
-                    {
-                        Text("Restart Game")
-                            .font(.caption)
-                            .foregroundColor(.white)
-                            .padding(8)
-                            .background(Color.black.opacity(0.7))
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                    }
-                    .padding()
-                    
                     Text("\(currentPage.id)")
                     Text("\(currentPage.storyText)")
                         .font(Font.custom("Hoefler Text", size: 20))
@@ -51,6 +39,8 @@ struct StoryView5: View {
                         .multilineTextAlignment(.leading)
                         .frame(width: 400)
                         .padding()
+                        .opacity(fadeIn ? 1 : 0)
+                        .blur(radius: blurAmount)
 
                     // Ellipse glow
                     GlowingEllipseView()
@@ -67,6 +57,8 @@ struct StoryView5: View {
                             .font(Font.custom("Hoefler Text", size: 20))
                             .foregroundColor(.white)
                             .padding()
+                            .opacity(fadeIn ? 1 : 0)
+                            .blur(radius: blurAmount)
                     }
 
                     // Optional choices
@@ -83,6 +75,8 @@ struct StoryView5: View {
                                 .font(Font.custom("Hoefler Text", size: 20))
                                 .foregroundColor(.white)
                                 .padding()
+                                .opacity(fadeIn ? 1 : 0)
+                                .blur(radius: blurAmount)
                         }
                     }
                     if currentPage.choice3Destination != nil
@@ -98,6 +92,8 @@ struct StoryView5: View {
                                 .font(Font.custom("Hoefler Text", size: 20))
                                 .foregroundColor(.white)
                                 .padding()
+                                .opacity(fadeIn ? 1 : 0)
+                                .blur(radius: blurAmount)
                         }
                     }
                     if currentPage.choice4Destination != nil
@@ -113,12 +109,18 @@ struct StoryView5: View {
                                 .font(Font.custom("Hoefler Text", size: 20))
                                 .foregroundColor(.white)
                                 .padding()
+                                .opacity(fadeIn ? 1 : 0)
+                                .blur(radius: blurAmount)
                         }
                     }
                 }
                 .onAppear
                 {
-                    // ADD STUFF HERE
+                    withAnimation(.easeInOut(duration: 2))
+                    {
+                        fadeIn = true
+                        blurAmount = 0
+                    }
                 }
                 .preferredColorScheme(.dark)
                 .navigationBarBackButtonHidden(true)
@@ -132,7 +134,7 @@ struct StoryView5: View {
                 switch nav
                 {
                 case .choice1:
-                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
+                    StoryView4(choiceMade: .constant(nav.destinationValue))
                 case .choice2:
                     StoryViewStripped(choiceMade: .constant(nav.destinationValue))
                 case .choice3:
@@ -147,6 +149,7 @@ struct StoryView5: View {
     }
 }
 
-#Preview {
-    StoryView5(choiceMade: .constant(5))
+#Preview
+{
+    StoryView3(choiceMade: .constant(3))
 }

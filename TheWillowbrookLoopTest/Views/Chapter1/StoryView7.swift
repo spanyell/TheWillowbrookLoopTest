@@ -1,14 +1,13 @@
 //
-//  StoryView3.swift
-//  WillowbrookLoopTest
+//  StoryView7.swift
+//  TheWillowbrookLoopTest
 //
-//  Created by Dan Beers on 6/23/25.
+//  Created by Dan Beers on 6/27/25.
 //
 
 import SwiftUI
 
-struct StoryView3: View
-{
+struct StoryView7: View {
     @Binding var choiceMade: Int
 
     @Namespace private var namespace
@@ -32,19 +31,6 @@ struct StoryView3: View
                 VStack
                 {
                     // Story Text
-                    Button(action: {
-                        navigateTo = .restartGame(0)
-                    })
-                    {
-                        Text("Restart Game")
-                            .font(.caption)
-                            .foregroundColor(.white)
-                            .padding(8)
-                            .background(Color.black.opacity(0.7))
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                    }
-                    .padding()
-                    
                     Text("\(currentPage.id)")
                     Text("\(currentPage.storyText)")
                         .font(Font.custom("Hoefler Text", size: 20))
@@ -133,7 +119,7 @@ struct StoryView3: View
                 switch nav
                 {
                 case .choice1:
-                    StoryView4(choiceMade: .constant(nav.destinationValue))
+                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
                 case .choice2:
                     StoryViewStripped(choiceMade: .constant(nav.destinationValue))
                 case .choice3:
@@ -148,7 +134,6 @@ struct StoryView3: View
     }
 }
 
-#Preview
-{
-    StoryView3(choiceMade: .constant(3))
+#Preview {
+    StoryView7(choiceMade: .constant(7))
 }

@@ -1,13 +1,13 @@
 //
-//  StoryView4.swift
-//  TheWillowbrookLoopTest
+//  StoryView1.swift
+//  WillowbrookLoopTest
 //
-//  Created by Dan Beers on 6/27/25.
+//  Created by Dan Beers on 6/23/25.
 //
 
 import SwiftUI
 
-struct StoryView4: View
+struct StoryView1: View
 {
     @Binding var choiceMade: Int
 
@@ -17,8 +17,14 @@ struct StoryView4: View
 
     // Choices States
     @State private var navigateTo: StoryNavigation? = nil
+
+    @State private var offsetStoryText = false
+    @State private var offsetEllipse = false
+    @State private var offsetChoices = false
     @State private var fadeIn = false
     @State private var blurAmount: CGFloat = 20
+    @State private var ellipseGlow = false
+    @State private var storyTextRotation: Double = 0
 
     var body: some View
     {
@@ -29,23 +35,9 @@ struct StoryView4: View
             ZStack
             {
                 LightningView()
-                DoorGroansOpenView()
                 VStack
                 {
                     // Story Text
-                    Button(action: {
-                        navigateTo = .restartGame(0)
-                    })
-                    {
-                        Text("Restart Game")
-                            .font(.caption)
-                            .foregroundColor(.white)
-                            .padding(8)
-                            .background(Color.black.opacity(0.7))
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                    }
-                    .padding()
-
                     Text("\(currentPage.id)")
                     Text("\(currentPage.storyText)")
                         .font(Font.custom("Hoefler Text", size: 20))
@@ -53,33 +45,41 @@ struct StoryView4: View
                         .multilineTextAlignment(.leading)
                         .frame(width: 400)
                         .padding()
+                        .offset(x: offsetStoryText ? -1000 : 0)
+                        .rotationEffect(.degrees(storyTextRotation))
                         .opacity(fadeIn ? 1 : 0)
-                        
+                        .blur(radius: blurAmount)
 
                     // Ellipse glow
                     GlowingEllipseView()
+                        .offset(x: offsetEllipse ? -1000 : 0)
                         .opacity(fadeIn ? 1 : 0)
 
                     // Choices
                     Button
                     {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2)
-                        {
-                            navigateTo = .choice1(currentPage.choice1Destination)
-                        }
+                        handleChoiceSelectionOpenCurtains(destination: .choice1(currentPage.choice1Destination), preAnimationDelay: 0.5)
                     } label: {
                         Text("\(currentPage.choice1)")
                             .font(Font.custom("Hoefler Text", size: 20))
                             .foregroundColor(.white)
                             .padding()
+                            .offset(x: offsetChoices ? 1000 : 0)
                             .opacity(fadeIn ? 1 : 0)
+                            .blur(radius: blurAmount)
                     }
 
-                    // Optional choices
+                    // Optional choice 2
                     if currentPage.choice2Destination != nil
                     {
                         Button
                         {
+                            withAnimation(.easeInOut(duration: 2))
+                            {
+                                fadeIn = false
+                                blurAmount = 100
+                                storyTextRotation = -360
+                            }
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2)
                             {
                                 navigateTo = .choice2(currentPage.choice2Destination ?? 0)
@@ -89,9 +89,13 @@ struct StoryView4: View
                                 .font(Font.custom("Hoefler Text", size: 20))
                                 .foregroundColor(.white)
                                 .padding()
+                                .offset(x: offsetChoices ? 1000 : 0)
                                 .opacity(fadeIn ? 1 : 0)
+                                .blur(radius: blurAmount)
                         }
                     }
+                    
+                    // Optional choice 3
                     if currentPage.choice3Destination != nil
                     {
                         Button
@@ -105,9 +109,13 @@ struct StoryView4: View
                                 .font(Font.custom("Hoefler Text", size: 20))
                                 .foregroundColor(.white)
                                 .padding()
+                                .offset(x: offsetChoices ? 1000 : 0)
                                 .opacity(fadeIn ? 1 : 0)
+                                .blur(radius: blurAmount)
                         }
                     }
+                    
+                    // Optional choice 4
                     if currentPage.choice4Destination != nil
                     {
                         Button
@@ -121,18 +129,17 @@ struct StoryView4: View
                                 .font(Font.custom("Hoefler Text", size: 20))
                                 .foregroundColor(.white)
                                 .padding()
-                                .opacity(fadeIn ? 1 : 0)
+                                .offset(x: offsetChoices ? 1000 : 0)
                         }
                     }
                 }
                 .onAppear
                 {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 7)
+                    withAnimation(.easeInOut(duration: 2))
                     {
-                        withAnimation(.easeInOut(duration: 2))
-                        {
-                            fadeIn.toggle()
-                        }
+                        fadeIn = true
+                        blurAmount = 0
+                        storyTextRotation = 360
                     }
                 }
                 .preferredColorScheme(.dark)
@@ -141,22 +148,40 @@ struct StoryView4: View
                 .navigationTransition(.zoom(sourceID: "zoom", in: namespace))
             }
 
+            
             // This is where the view changes
             .navigationDestination(item: $navigateTo)
             { nav in
                 switch nav
                 {
                 case .choice1:
-                    StoryView5(choiceMade: .constant(nav.destinationValue))
+                    StoryView3(choiceMade: .constant(nav.destinationValue))
                 case .choice2:
-                    StoryView6(choiceMade: .constant(nav.destinationValue))
+                    StoryView2(choiceMade: .constant(nav.destinationValue))
                 case .choice3:
-                    StoryView7(choiceMade: .constant(nav.destinationValue))
+                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
                 case .choice4:
-                    StoryView18(choiceMade: .constant(nav.destinationValue))
+                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
                 case .restartGame:
                     StoryView0(choiceMade: .constant(0))
                 }
+            }
+        }
+    }
+
+    private func handleChoiceSelectionOpenCurtains(destination: StoryNavigation, preAnimationDelay: Double = 0.0)
+    {
+        DispatchQueue.main.asyncAfter(deadline: .now() + preAnimationDelay)
+        {
+            withAnimation(.easeInOut(duration: 1))
+            {
+                offsetStoryText.toggle()
+                offsetEllipse.toggle()
+                offsetChoices.toggle()
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1)
+            {
+                navigateTo = destination
             }
         }
     }
@@ -164,5 +189,5 @@ struct StoryView4: View
 
 #Preview
 {
-    StoryView4(choiceMade: .constant(4))
+    StoryView1(choiceMade: .constant(1))
 }

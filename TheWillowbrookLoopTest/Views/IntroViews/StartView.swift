@@ -36,8 +36,8 @@ struct StartView: View
                 WordSmatterView()
                     .onAppear
                     {
-                        soundManager.playAmbiencePlayer1(data: Constants.RainAndThunder!.data)
-                        soundManager.playMusicPlayer(data: Constants.MainViewMuic!.data)
+//                        soundManager.playAmbiencePlayer1(data: Constants.RainAndThunder!.data)
+//                        soundManager.playMusicPlayer(data: Constants.MainViewMuic!.data)
                     }
                 VStack
                 {
@@ -68,7 +68,7 @@ struct StartView: View
 
                             .simultaneousGesture(TapGesture().onEnded
                             {
-                                soundManager.playEffectPlayer1(data: Constants.ThunderCrash!.data)
+//                                soundManager.playEffectPlayer1(data: Constants.ThunderCrash!.data)
                             })
                         }
                     }
@@ -91,7 +91,7 @@ struct StartView: View
                             }
                             .simultaneousGesture(TapGesture().onEnded
                             {
-                                soundManager.playEffectPlayer1(data: Constants.ThunderCrash!.data)
+//                                soundManager.playEffectPlayer1(data: Constants.ThunderCrash!.data)
                             })
                         }
                     }
@@ -115,7 +115,7 @@ struct StartView: View
 
                             }.simultaneousGesture(TapGesture().onEnded
                             {
-                                soundManager.playEffectPlayer1(data: Constants.ThunderCrash!.data)
+//                                soundManager.playEffectPlayer1(data: Constants.ThunderCrash!.data)
                             })
                         }
                     }
@@ -137,7 +137,7 @@ struct StartView: View
                                                value: flipAngleQuitGame)
                             }.simultaneousGesture(TapGesture().onEnded
                             {
-                                soundManager.playEffectPlayer1(data: Constants.ThunderCrash!.data)
+//                                soundManager.playEffectPlayer1(data: Constants.ThunderCrash!.data)
                             })
                         }
                     }

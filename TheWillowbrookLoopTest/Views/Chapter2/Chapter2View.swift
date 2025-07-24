@@ -1,13 +1,13 @@
 //
-//  StoryViewStripped.swift
-//  WillowbrookLoopTest
+//  Chapter2View.swift
+//  TheWillowbrookLoopTest
 //
-//  Created by Dan Beers on 6/21/25.
+//  Created by Dan Beers on 6/28/25.
 //
 
 import SwiftUI
 
-struct StoryViewStripped: View {
+struct Chapter2View: View {
     @Binding var choiceMade: Int
 
     @Namespace private var namespace
@@ -26,6 +26,7 @@ struct StoryViewStripped: View {
         {
             ZStack
             {
+                DancersViewProtocols(dancingPattern: 0.4)
                 VStack
                 {
                     // Temporary Restart Game button
@@ -41,7 +42,6 @@ struct StoryViewStripped: View {
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
                     .padding()
-                    Text("StoryViewStripped")
                     
                     // Story Text
                     Text("\(currentPage.storyText)")
@@ -116,22 +116,21 @@ struct StoryViewStripped: View {
             .navigationDestination(item: $navigateTo) { nav in
                 switch nav {
                 case .choice1:
-                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
+                    Chapter2View(choiceMade: .constant(nav.destinationValue))
                 case .choice2:
-                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
+                    Chapter2View(choiceMade: .constant(nav.destinationValue))
                 case .choice3:
-                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
+                    Chapter2View(choiceMade: .constant(nav.destinationValue))
                 case .choice4:
-                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
+                    Chapter2View(choiceMade: .constant(nav.destinationValue))
                 case .restartGame:
-                    StoryViewStripped(choiceMade: .constant(0))
+                    Chapter2View(choiceMade: .constant(0))
                 }
             }
         }
     }
 }
 
-
 #Preview {
-    StoryViewStripped(choiceMade: .constant(0))
+    Chapter2View(choiceMade: .constant(0))
 }

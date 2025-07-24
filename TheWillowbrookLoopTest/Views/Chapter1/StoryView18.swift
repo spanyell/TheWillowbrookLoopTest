@@ -32,21 +32,7 @@ struct StoryView18: View
                 WindowsRainView()
                 VStack
                 {
-                    Button(action: {
-                        navigateTo = .restartGame(0)
-                    })
-                    {
-                        Text("Restart Game")
-                            .font(.caption)
-                            .foregroundColor(.white)
-                            .padding(8)
-                            .background(Color.black.opacity(0.7))
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                    }
-                    .padding()
-
                     // Story Text
-                    
                     Text("\(currentPage.id)")
                     Text("\(currentPage.storyText)")
                         .font(Font.custom("Hoefler Text", size: 20))

@@ -1,23 +1,28 @@
 //
-//  StoryView7.swift
-//  TheWillowbrookLoopTest
+//  StoryView0.swift
+//  WillowbrookLoopTest
 //
-//  Created by Dan Beers on 6/27/25.
+//  Created by Dan Beers on 6/23/25.
 //
 
 import SwiftUI
 
-struct StoryView7: View {
+struct StoryView0: View
+{
     @Binding var choiceMade: Int
 
     @Namespace private var namespace
 
-    // StoryText States
-
     // Choices States
     @State private var navigateTo: StoryNavigation? = nil
+
+    // Animation States
+    @State private var offsetStoryText = false
+    @State private var offsetEllipse = false
+    @State private var offsetChoices = false
     @State private var fadeIn = false
     @State private var blurAmount: CGFloat = 20
+    @State private var storyTextRotation: Double = 0
 
     var body: some View
     {
@@ -27,46 +32,39 @@ struct StoryView7: View {
         {
             ZStack
             {
+                
                 LightningView()
+                
                 VStack
                 {
-                    // Story Text
-                    Button(action: {
-                        navigateTo = .restartGame(0)
-                    })
-                    {
-                        Text("Restart Game")
-                            .font(.caption)
-                            .foregroundColor(.white)
-                            .padding(8)
-                            .background(Color.black.opacity(0.7))
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                    }
-                    .padding()
-                    
-                    Text("\(currentPage.id)")
                     Text("\(currentPage.storyText)")
                         .font(Font.custom("Hoefler Text", size: 20))
                         .foregroundStyle(.white)
                         .multilineTextAlignment(.leading)
                         .frame(width: 400)
                         .padding()
+                        .offset(x: offsetStoryText ? -1000 : 0)
+                        .rotationEffect(.degrees(storyTextRotation))
+                        .opacity(fadeIn ? 1 : 0)
+                        .blur(radius: blurAmount)
 
                     // Ellipse glow
                     GlowingEllipseView()
+                        .offset(x: offsetEllipse ? -1000 : 0)
+                        .opacity(fadeIn ? 1 : 0)
 
                     // Choices
                     Button
                     {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2)
-                        {
-                            navigateTo = .choice1(currentPage.choice1Destination)
-                        }
+                        handleChoiceSelectionOpenCurtains(destination: .choice1(currentPage.choice1Destination), preAnimationDelay: 0.5)
                     } label: {
                         Text("\(currentPage.choice1)")
                             .font(Font.custom("Hoefler Text", size: 20))
                             .foregroundColor(.white)
                             .padding()
+                            .offset(x: offsetChoices ? 1000 : 0)
+                            .opacity(fadeIn ? 1 : 0)
+                            .blur(radius: blurAmount)
                     }
 
                     // Optional choices
@@ -74,6 +72,12 @@ struct StoryView7: View {
                     {
                         Button
                         {
+                            withAnimation(.easeInOut(duration: 2))
+                            {
+                                fadeIn = false
+                                blurAmount = 100
+                                storyTextRotation = -360
+                            }
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2)
                             {
                                 navigateTo = .choice2(currentPage.choice2Destination ?? 0)
@@ -83,12 +87,20 @@ struct StoryView7: View {
                                 .font(Font.custom("Hoefler Text", size: 20))
                                 .foregroundColor(.white)
                                 .padding()
+                                .offset(x: offsetChoices ? 1000 : 0)
+                                .opacity(fadeIn ? 1 : 0)
+                                .blur(radius: blurAmount)
                         }
                     }
                     if currentPage.choice3Destination != nil
                     {
                         Button
                         {
+                            withAnimation(.easeInOut(duration: 2))
+                            {
+                                fadeIn = false
+                                blurAmount = 100
+                            }
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2)
                             {
                                 navigateTo = .choice3(currentPage.choice3Destination ?? 0)
@@ -98,27 +110,35 @@ struct StoryView7: View {
                                 .font(Font.custom("Hoefler Text", size: 20))
                                 .foregroundColor(.white)
                                 .padding()
+                                .offset(x: offsetChoices ? 1000 : 0)
+                                .opacity(fadeIn ? 1 : 0)
+                                .blur(radius: blurAmount)
                         }
                     }
                     if currentPage.choice4Destination != nil
                     {
                         Button
                         {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 2)
-                            {
-                                navigateTo = .choice4(currentPage.choice4Destination ?? 0)
-                            }
+                            navigateTo = .choice4(currentPage.choice4Destination ?? 0)
                         } label: {
                             Text("\(currentPage.choice4 ?? "")")
                                 .font(Font.custom("Hoefler Text", size: 20))
                                 .foregroundColor(.white)
                                 .padding()
+                                .offset(x: offsetChoices ? 1000 : 0)
+                                .opacity(fadeIn ? 1 : 0)
+                                .blur(radius: blurAmount)
                         }
                     }
                 }
                 .onAppear
                 {
-                    // ADD STUFF HERE
+                    withAnimation(.easeInOut(duration: 5))
+                    {
+                        fadeIn = true
+                        blurAmount = 0
+                        storyTextRotation = 360
+                    }
                 }
                 .preferredColorScheme(.dark)
                 .navigationBarBackButtonHidden(true)
@@ -126,27 +146,47 @@ struct StoryView7: View {
                 .navigationTransition(.zoom(sourceID: "zoom", in: namespace))
             }
             
+
             // This is where the view changes
             .navigationDestination(item: $navigateTo)
             { nav in
                 switch nav
                 {
                 case .choice1:
-                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
+                    StoryView3(choiceMade: .constant(nav.destinationValue))
                 case .choice2:
-                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
+                    StoryView1(choiceMade: .constant(nav.destinationValue))
                 case .choice3:
-                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
+                    StoryView2(choiceMade: .constant(nav.destinationValue))
                 case .choice4:
-                    StoryView18(choiceMade: .constant(nav.destinationValue))
+                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
                 case .restartGame:
                     StoryView0(choiceMade: .constant(0))
                 }
             }
         }
+        
+    }
+
+    private func handleChoiceSelectionOpenCurtains(destination: StoryNavigation, preAnimationDelay: Double = 0.0)
+    {
+        DispatchQueue.main.asyncAfter(deadline: .now() + preAnimationDelay)
+        {
+            withAnimation(.easeInOut(duration: 1))
+            {
+                offsetStoryText.toggle()
+                offsetEllipse.toggle()
+                offsetChoices.toggle()
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1)
+            {
+                navigateTo = destination
+            }
+        }
     }
 }
 
-#Preview {
-    StoryView7(choiceMade: .constant(7))
+#Preview
+{
+    StoryView0(choiceMade: .constant(0))
 }

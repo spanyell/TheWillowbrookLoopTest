@@ -12,6 +12,7 @@ import Foundation
 // var willowbrookData: [Willowbrook] = load("WillowbrookLoopTestData2.json")
 
 var willowbrookData: [Willowbrook] = load("TheWillowbrookLoopTestData.json")
+// var willowbrookData: [Willowbrook] = load("TWLChapter2Data.json")
 
 func load<T: Decodable>(_ filename: String) -> T
 {

@@ -22,7 +22,7 @@ struct StoryView2: View
     @State private var offsetEllipse = false
     @State private var offsetChoices = false
     @State private var fadeIn = false
-    @State private var blurAmount: CGFloat = 20
+    @State private var blurAmount: CGFloat = 40
     @State private var storyTextRotation: Double = 0
 
     var body: some View
@@ -37,19 +37,6 @@ struct StoryView2: View
                 VStack
                 {
                     // Story Text
-                    Button(action: {
-                        navigateTo = .restartGame(0)
-                    })
-                    {
-                        Text("Restart Game")
-                            .font(.caption)
-                            .foregroundColor(.white)
-                            .padding(8)
-                            .background(Color.black.opacity(0.7))
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                    }
-                    .padding()
-                    
                     Text("\(currentPage.id)")
                     Text("\(currentPage.storyText)")
                         .font(Font.custom("Hoefler Text", size: 20))
@@ -58,10 +45,14 @@ struct StoryView2: View
                         .frame(width: 400)
                         .padding()
                         .offset(x: offsetStoryText ? -1000 : 0)
+                        .opacity(fadeIn ? 1 : 0)
+                        .blur(radius: blurAmount)
 
                     // Ellipse glow
                     GlowingEllipseView()
                         .offset(x: offsetEllipse ? -1000 : 0)
+                        .opacity(fadeIn ? 1 : 0)
+                        .blur(radius: blurAmount)
 
                     // Choices
                     Button
@@ -73,6 +64,8 @@ struct StoryView2: View
                             .foregroundColor(.white)
                             .padding()
                             .offset(x: offsetChoices ? 1000 : 0)
+                            .opacity(fadeIn ? 1 : 0)
+                            .blur(radius: blurAmount)
                     }
 
                     // Optional choices
@@ -80,6 +73,12 @@ struct StoryView2: View
                     {
                         Button
                         {
+                            withAnimation(.easeInOut(duration: 2))
+                            {
+                                fadeIn = false
+                                blurAmount = 100
+                                storyTextRotation = -360
+                            }
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2)
                             {
                                 navigateTo = .choice2(currentPage.choice2Destination ?? 0)
@@ -90,6 +89,8 @@ struct StoryView2: View
                                 .foregroundColor(.white)
                                 .padding()
                                 .offset(x: offsetChoices ? 1000 : 0)
+                                .opacity(fadeIn ? 1 : 0)
+                                .blur(radius: blurAmount)
                         }
                     }
                     if currentPage.choice3Destination != nil
@@ -104,7 +105,7 @@ struct StoryView2: View
                             }
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2)
                             {
-                                navigateTo = .choice2(currentPage.choice2Destination ?? 0)
+                                navigateTo = .choice3(currentPage.choice3Destination ?? 0)
                             }
                         } label: {
                             Text("\(currentPage.choice3 ?? "")")
@@ -133,7 +134,11 @@ struct StoryView2: View
                 }
                 .onAppear
                 {
-                    // Add stuff here
+                    withAnimation(.easeInOut(duration: 2))
+                    {
+                        fadeIn = true
+                        blurAmount = 0
+                    }
                 }
                 .preferredColorScheme(.dark)
                 .navigationBarBackButtonHidden(true)
