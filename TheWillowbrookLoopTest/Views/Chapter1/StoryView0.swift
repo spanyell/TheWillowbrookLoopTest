@@ -32,9 +32,7 @@ struct StoryView0: View
         {
             ZStack
             {
-                
                 LightningView()
-                
                 VStack
                 {
                     Text("\(currentPage.storyText)")
@@ -145,27 +143,25 @@ struct StoryView0: View
                 .ignoresSafeArea()
                 .navigationTransition(.zoom(sourceID: "zoom", in: namespace))
             }
-            
+        }
 
-            // This is where the view changes
-            .navigationDestination(item: $navigateTo)
-            { nav in
-                switch nav
-                {
-                case .choice1:
-                    StoryView3(choiceMade: .constant(nav.destinationValue))
-                case .choice2:
-                    StoryView1(choiceMade: .constant(nav.destinationValue))
-                case .choice3:
-                    StoryView2(choiceMade: .constant(nav.destinationValue))
-                case .choice4:
-                    StoryViewStripped(choiceMade: .constant(nav.destinationValue))
-                case .restartGame:
-                    StoryView0(choiceMade: .constant(0))
-                }
+        // This is where the view changes
+        .navigationDestination(item: $navigateTo)
+        { nav in
+            switch nav
+            {
+            case .choice1:
+                StoryView3(choiceMade: .constant(nav.destinationValue))
+            case .choice2:
+                StoryView1(choiceMade: .constant(nav.destinationValue))
+            case .choice3:
+                StoryView2(choiceMade: .constant(nav.destinationValue))
+            case .choice4:
+                StoryViewStripped(choiceMade: .constant(nav.destinationValue))
+            case .restartGame:
+                StoryView0(choiceMade: .constant(0))
             }
         }
-        
     }
 
     private func handleChoiceSelectionOpenCurtains(destination: StoryNavigation, preAnimationDelay: Double = 0.0)

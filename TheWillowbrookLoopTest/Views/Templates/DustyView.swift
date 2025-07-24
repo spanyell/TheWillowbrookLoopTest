@@ -83,7 +83,7 @@ struct DustParticle: View
 
 struct DustyBackground: View
 {
-    let count = 40
+    let count = 100
     var body: some View
     {
         GeometryReader

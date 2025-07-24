@@ -28,19 +28,6 @@ struct StoryViewStripped: View {
             {
                 VStack
                 {
-                    // Temporary Restart Game button
-                    Button(action: {
-                        navigateTo = .restartGame(0)
-                    })
-                    {
-                        Text("Restart Game")
-                            .font(.caption)
-                            .foregroundColor(.white)
-                            .padding(8)
-                            .background(Color.black.opacity(0.7))
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                    }
-                    .padding()
                     Text("StoryViewStripped")
                     
                     // Story Text

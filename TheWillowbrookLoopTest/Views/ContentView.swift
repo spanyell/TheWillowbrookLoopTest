@@ -13,12 +13,6 @@ struct ContentView: View {
     var body: some View {
         let views: [AnyView] = [
             AnyView(StoryView0(choiceMade: .constant(0))),
-            AnyView(Text("Other View")
-                .font(.largeTitle)
-                .foregroundColor(.yellow)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.blue)
-            ),
             AnyView(StartView())
         ]
         ParentTransitionView(
@@ -30,7 +24,7 @@ struct ContentView: View {
             VStack {
                 HStack {
                     Button("Go to StartView") {
-                        switchTo(2, .move(edge: .leading))
+                        switchTo(1, .move(edge: .leading))
                     }
                     .padding()
                     .foregroundColor(.white)
